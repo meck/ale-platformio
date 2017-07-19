@@ -19,13 +19,9 @@ if empty(s:pio_gcc_flags)
   finish
 endif
 
-let g:syntastic_c_compiler_options = s:pio_gcc_flags["gccDefaultCFlags"]
-let g:syntastic_c_include_dirs = split(s:pio_gcc_flags["gccIncludePaths"], ",")
-let g:syntastic_c_check_header = 1
-let g:syntastic_c_auto_refresh_includes = 1
+let g:ale_c_gcc_options = join(map(split(s:pio_gcc_flags["gccIncludePaths"], ","), '"-I" . v:val')) . ' ' . s:pio_gcc_flags["gccDefaultCFlags"]
 
-let g:syntastic_cpp_compiler = s:pio_gcc_flags["execPath"]
-let g:syntastic_cpp_include_dirs = split(s:pio_gcc_flags["gccIncludePaths"], ",")
-let g:syntastic_cpp_compiler_options = s:pio_gcc_flags["gccDefaultCppFlags"]
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_auto_refresh_includes = 1
+let g:ale_cpp_gcc_options = join(map(split(s:pio_gcc_flags["gccIncludePaths"], ","), '"-I" . v:val')) . ' ' . s:pio_gcc_flags["gccDefaultCppFlags"]
+let g:ale_cpp_gcc_executable = s:pio_gcc_flags["execPath"]
+
+let g:ale_linters = { 'cpp': ['clangcheck', 'clangtidy', 'cppcheck', 'cpplint', 'g++'],}
